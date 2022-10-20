@@ -8,7 +8,7 @@ var Person=require('./Person');
 
 
 app.listen(port,()=>{
-    Mongoose.connect("mongodb+srv://mern1:****@cluster0.uronpyl.mongodb.net/test")
+    Mongoose.connect("mongodb+srv://mern1:mern1@cluster0.uronpyl.mongodb.net/test")
     .then(()=>{
         console.log("serveur connected successfully")
     })
@@ -84,7 +84,7 @@ app.put('/updateById',(req,res)=>{
     console.log("update person by ID..")
     Person.findById("63503f07a68c2c307d183ea4")
     .then(person=>{
-        person.favoriteFood.push('sardine')
+        person.favoriteFoods.push('sardine')
         person.save().then(pers=>res.send(pers))
     })
 })
