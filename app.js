@@ -7,6 +7,7 @@ let port=8000 || env.PORT ;
 var Person=require('./Person');
 
 
+app.use(express.json())
 app.listen(port,()=>{
     Mongoose.connect("mongodb+srv://mern1:mern1@cluster0.uronpyl.mongodb.net/test")
     .then(()=>{
@@ -24,9 +25,12 @@ let arrayOfPeople=[
    ]
 
 //Create and Save a Record of a Model:
-let haroune=new Person({name:'haroune',age:24,favoriteFoods:['loubia','pates']})
+
 
 app.post('/addPerson',(req,res)=>{
+
+    // const body=req.body
+    let haroune=new Person({name: req.body.name, age:req.body.age ,favoriteFoods:req.body.favoriteFoods})
     console.log("new person");
     
     haroune.save((err,person)=>{
@@ -127,8 +131,7 @@ app.get('/chainSearch',(req,res)=>{
     Person.find({favoriteFoods : "pizza" })
         .select({age:0})                
         .limit(2)              
-        .sort({name: 1})     
-        .select({age:0}) 
+        .sort({name: 1})         
         .exec((err,person)=>{
             if(err) res.status(400).send(err);
             else res.status(200).json(person);
